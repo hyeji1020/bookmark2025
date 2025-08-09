@@ -9,6 +9,9 @@
 # next.js
 /.next/
 /out/
+tmp
+ttt
+upload
 
 # production
 /build
