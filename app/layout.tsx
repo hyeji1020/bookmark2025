@@ -41,11 +41,11 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
-          >
+        >
 
         <SessionProvider session={session}>
           <div className='flex flex-col container justify-center mx-auto'>
-            <header className='flex justify-between mb-5'>
+            <header className='flex justify-between mt-5 mb-5'>
               <Link href="/" 
               className="text-3xl flex items-center tracking-tight text-cyan-400 dark:text-cyan-200 
               font-bold">
@@ -54,7 +54,7 @@ export default function RootLayout({
               </Link>
               <Nav/>
             </header>
-            <main className='flex-1'>{children}</main>
+            <main className='flex-1 mx-auto'>{children}</main>
             <footer className='text-center text-cyan-400 dark:text-cyan-200'>&#169; hyeji 2025</footer>
           </div>
         </SessionProvider>

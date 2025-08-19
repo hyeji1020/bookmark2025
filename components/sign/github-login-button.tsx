@@ -1,8 +1,9 @@
+// GithubLoginButton.tsx
 import { Button } from '@/components/ui/button';
 
 export function GithubLoginButton() {
   return (
-    <Button className='w-full gap-2 rounded-md bg-[#181717] text-white hover:bg-black h-12'>
+    <Button className='w-full gap-2 rounded-md bg-[#181717] text-white hover:bg-black h-12 dark:hoer:bg-black/90'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         className='w-6 h-6'

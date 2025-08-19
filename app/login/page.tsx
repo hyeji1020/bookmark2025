@@ -1,57 +1,53 @@
-import { Button } from '@/components/ui/button';
-import { GithubLoginButton } from '@/components/ui/github-button';
-import { GoogleLoginButton } from '@/components/ui/google-login-button';
-import { KakaoLoginButton } from '@/components/ui/kakao-login-button';
-import LabelInput from '@/components/ui/label-input';
-import { NaverLoginButton } from '@/components/ui/naver-login-button';
+import { GithubLoginButton } from '@/components/sign/github-login-button';
+import { GoogleLoginButton } from '@/components/sign/google-login-button';
+import { KakaoLoginButton } from '@/components/sign/kakao-login-button';
+import { NaverLoginButton } from '@/components/sign/naver-login-button';
+import SignForm from './sign-form';
+import SoMany from './so-many';
+import { BookImages, MarkImages, PeopleImages } from './imges';
 
 export default function Login() {
   return (
-    <div className='bg-sky-100 grid place-items-center h-full'>
-      <div className='flex [&>div]:p-4 rounded-lg shadow-md border'>
+    <div className='grid place-items-center h-full'>
+      <div className='flex [&>div]:p-4 rounded-lg shadow-md border overflow-hidden'>
         <div className='flex-1'>
-          <div className=''>
-            <h3 className='text-2xl text-center'>Login</h3>
+          <div className='flex items-center'>
+            <h1 className='text-2xl font-semibold'>Book & Mark</h1>
+            <span className='ml-3 text-gray-500'>Sign with</span>
           </div>
           <div>
-            <form className=''>
-              <LabelInput
-                label='email'
-                type='email'
-                placeholder='example@gmail.com'
-              />
-              <LabelInput
-                label='password'
-                type='password'
-                placeholder='Your password...'
-              />
-            <div className='grid grid-cols-1 gap-2 margin-5px'>
-              <KakaoLoginButton/>
-              <NaverLoginButton/>
-              <GoogleLoginButton/>
-              <GithubLoginButton/>
-            </div>
-              <div className='flex justify-between my-2'>
-                <label className='cursor-pointer hover:text-white-600'>
-                  <input type='checkbox' className='mr-1 translate-y-[1px]' />
-                  Remember me
-                </label>
-                <a href='#'>Forgot password?</a>
-              </div>
-              <Button className='w-full bg-sky-400'>
-                Login with your account
-              </Button>
-            </form>
+            <SignForm />
           </div>
+          <div className='text-center relative text-gray-600 before:content-[""] before:absolute before:left-0 before:top-[50%] before:bg-gray-200 before:h-[1px] before:w-[45%] after:content-[""] after:absolute after:right-0 after:top-[50%] after:bg-gray-200 after:h-[1px] after:w-[45%]'>
+            or
+          </div>
+          <div className='grid grid-cols-1 gap-2 my-2'>
+            <GoogleLoginButton />
+            <GithubLoginButton />
+            <NaverLoginButton />
+            <KakaoLoginButton />
+          </div>
+      
         </div>
 
-        <div className='flex-1 bg-slate-200'>
-          <h1 className='text-3xl text-sky-400  '>Book & Mark</h1>
-          <div className='x'>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti
-            ullam in repudiandae ipsa natus, debitis, laboriosam exercitationem
-            incidunt inventore voluptate velit! Libero dolores corrupti minus
-            reprehenderit blanditiis suscipit, soluta iusto?
+        <div className='flex-1 bg-slate-200 text-white flex items-center'>
+          <div>
+            <h1 className='text-3xl text-sky-400 font-semibold'>
+              Social BookMark, <br />
+              Record than Remember!
+            </h1>
+            <div className='my-3'>
+              Your go-to hub for sharing and discovering great and useful
+              websites. Connect with others, swap your favorite links, and
+              explore a world of useful resources — all powered by this
+              community
+            </div>
+
+            <div className='space-y-3'>
+              <SoMany images={BookImages} howMany='50K+' remark='Books' />
+              <SoMany images={MarkImages} howMany='500K+' remark='Marks' />
+              <SoMany images={PeopleImages} howMany='100K+' remark='Users' />
+            </div>
           </div>
         </div>
       </div>

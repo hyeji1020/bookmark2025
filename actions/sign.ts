@@ -2,6 +2,8 @@
 
 import { signIn, signOut } from "@/lib/auth";
 import { AuthError } from "next-auth";
+import { sendRegistCheck } from "./mailer";
+import { v4 as uuidv4 } from "uuid";
 
 type Provider = "google" | "github" | "naver" | "kakao" | "credential";
 
@@ -9,7 +11,17 @@ export const login = async (provider: Provider, callback?: string) => {
   signIn(provider, { redirectTo: callback || "/" });
 };
 
-// form login page
+export const regist = async (formData: FormData) => {
+  const entries = Object.entries(formData);
+  console.log("entries", entries);
+
+  //Todo: zod validate check;
+  const authKey = uuidv4();
+  await sendRegistCheck("hyejilee100@gmail.com", authKey);
+  console.log("Main has sent.");
+};
+
+// Crendentail: form login page
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData
