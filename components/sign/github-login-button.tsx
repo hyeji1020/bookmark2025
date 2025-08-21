@@ -1,9 +1,16 @@
-// GithubLoginButton.tsx
+'use client';
+import { login } from '@/actions/sign';
+// import { loginGithub } from '@/actions/sign';
 import { Button } from '@/components/ui/button';
 
 export function GithubLoginButton() {
+  const loginGithub = async () => {
+    login('github')
+  }
   return (
-    <Button className='w-full gap-2 rounded-md bg-[#181717] text-white hover:bg-black h-12 dark:hoer:bg-black/90'>
+    <Button 
+    onClick={loginGithub}
+    className='w-full gap-2 rounded-md bg-[#181717] text-white hover:bg-black h-12 dark:hoer:bg-black/90'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         className='w-6 h-6'

@@ -1,8 +1,11 @@
 // NaverLoginButton.tsx
+import { loginNaver } from '@/actions/sign';
 import { Button } from '@/components/ui/button';
 
 export function NaverLoginButton() {
+
   return (
+    <form action={loginNaver}>
     <Button
       variant='outline'
       className='w-full gap-2 bg-[#03C75A] hover:bg-[#02b155] text-white h-12'
@@ -17,5 +20,6 @@ export function NaverLoginButton() {
       </svg>
       <span className='text-sm font-medium'>네이버 로그인</span>
     </Button>
+    </form>
   );
 }

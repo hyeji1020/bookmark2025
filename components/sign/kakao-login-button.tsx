@@ -1,15 +1,16 @@
 // KakaoLoginButton.tsx
+import { login } from '@/actions/sign';
 import { Button } from '@/components/ui/button';
 
 export function KakaoLoginButton() {
-  const onClick = () => {
-    // 서버 라우트가 authorize URL을 만들어 302로 카카오로 보냄
-    window.location.href = '/api/auth/kakao/login';
+  const loginKakao = async () => {
+    'use server';
+    await login('kakao');
   };
-
   
   return (
     <Button
+    onClick={loginKakao}
       variant='outline'
       className='w-full gap-2 bg-[#FEE500] hover:bg-[#ecd800] text-[#000000] h-12 dark:text-white'
     >

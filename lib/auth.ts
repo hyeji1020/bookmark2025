@@ -1,14 +1,14 @@
-// lib/auth.ts for google
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import Naver from "next-auth/providers/naver";
 import Kakao from "next-auth/providers/kakao";
-import Credentials from "next-auth/providers/credentials";
+import Naver from "next-auth/providers/naver";
+import { v4 as uuidv4 } from "uuid";
+import prisma from "./db";
 
 export const {
   handlers: { GET, POST },
-  // cf. next-auth/react/signIn/signOut은 해당 페이지로 이동하는 함수!
   auth,
   signIn,
   signOut,
@@ -16,8 +16,8 @@ export const {
   providers: [
     Google,
     GitHub,
-    Naver,
     Kakao,
+    Naver,
     Credentials({
       name: "Email",
       credentials: {
@@ -37,9 +37,48 @@ export const {
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
+  },
+  trustHost: true,
+  jwt: { maxAge: 30 * 60 },
   callbacks: {
+    // DB 읽어서 존재하면 로그인
+    // 존재하지 않으면 가입(with authKey) => send email
+    async signIn({ user, account, profile }) {
+      const { name, email, image } = user;
+      if (!email) return false;
+
+      const mbr = await prisma.member.findUnique({
+        select: { id: true, nickname: true },
+        where: { email },
+      });
+      if (mbr) {
+        return true;
+      }
+
+      const emailcheck = uuidv4();
+      console.log("🚀 ~ emailcheck:", emailcheck);
+
+      const newMbr = await prisma.member.create({
+        select: { id: true, nickname: true },
+        data: {
+          nickname: name || "guest",
+          email,
+          image,
+          emailcheck,
+        },
+      });
+      console.log("🚀 ~ newMbr:", newMbr);
+
+      // sendRegistMail
+
+      return false;
+    },
     async jwt({ token, user }) {
-      // jwt 방식
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -52,16 +91,9 @@ export const {
         session.user.id = token.id as string;
         session.user.email = token.email!;
         session.user.name = token.name;
+        session.user.isadmin = !!token.isadmin;
       }
       return session;
     },
-  },
-  trustHost: true,
-  jwt: { maxAge: 30 * 60 },
-  pages: {
-    signIn: "/login",
-  },
-  session: {
-    strategy: "jwt",
   },
 });

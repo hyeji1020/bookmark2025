@@ -1,9 +1,9 @@
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import { use } from "react";
 
 type Props = {
     params: Promise<{authKey: string}>;
-}
+};
 export default function RegistCheck({params}:Props) {
     const authKey = use(params);
 
