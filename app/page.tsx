@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/app/auth";
 import { use } from "react";
 
 export default function Home() {

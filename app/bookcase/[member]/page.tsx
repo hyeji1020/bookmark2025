@@ -1,5 +1,5 @@
 import { use } from 'react';
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/auth';
 
 type Props ={
     params: Promise<{member:string}>;

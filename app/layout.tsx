@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import {BookmarkIcon} from 'lucide-react';
 import Nav from './Nav';
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/auth';
 import { SessionProvider } from 'next-auth/react';
 import { use } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';

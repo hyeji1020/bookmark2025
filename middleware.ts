@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { auth } from './lib/auth';
+import { auth } from './app/auth';
 
 export async function middleware(req: NextRequest) {
   const session = await auth();
@@ -20,6 +20,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|images|api/auth|login|regist|passwdcheck|registcheck|$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|images|api/auth|api/sendmail|login|regist|passwdcheck|registcheck|login/error|$).*)',
   ],
 };

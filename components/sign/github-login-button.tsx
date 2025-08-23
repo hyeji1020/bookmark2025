@@ -4,6 +4,7 @@ import { login } from '@/actions/sign';
 import { Button } from '@/components/ui/button';
 
 export function GithubLoginButton() {
+  // stub!! 
   const loginGithub = async () => {
     login('github')
   }

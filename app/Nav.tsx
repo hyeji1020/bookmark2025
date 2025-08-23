@@ -2,7 +2,7 @@ import ThemeChanger from '@/components/theme-changer';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SquareLibraryIcon } from 'lucide-react';
-import { auth } from '@/lib/auth';
+import { auth } from '@/app/auth';
 
 export default async function Nav() {
   const session = await auth();

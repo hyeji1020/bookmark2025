@@ -1,3 +1,5 @@
+import { findMemberByEmail } from "@/actions/sign";
+import prisma from "@/lib/db";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
@@ -5,7 +7,6 @@ import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
 import { v4 as uuidv4 } from "uuid";
-import prisma from "./db";
 
 export const {
   handlers: { GET, POST },
@@ -42,25 +43,29 @@ export const {
   },
   pages: {
     signIn: "/login",
+    error: "/login/error",
   },
   trustHost: true,
   jwt: { maxAge: 30 * 60 },
   callbacks: {
-    // DB 읽어서 존재하면 로그인
+    // SNS(login/regist), credential(login) ==> DB 읽어서 존재하면 로그인
     // 존재하지 않으면 가입(with authKey) => send email
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       const { name, email, image } = user;
       if (!email) return false;
 
-      const mbr = await prisma.member.findUnique({
-        select: { id: true, nickname: true },
-        where: { email },
-      });
+      const isCredential = account?.provider === "credential";
+
+      const mbr = await findMemberByEmail(email);
+
       if (mbr) {
+        if (mbr.emailcheck)
+          return `/login/error?error=CheckEmail&email=${email}&emailcheck=${mbr.emailcheck}`;
+        if (mbr.outdt) return "/login/error?error=WithdrawMember";
         return true;
       }
 
-      const emailcheck = uuidv4();
+      const emailcheck = isCredential ? uuidv4() : null;
       console.log("🚀 ~ emailcheck:", emailcheck);
 
       const newMbr = await prisma.member.create({
@@ -86,6 +91,7 @@ export const {
       }
       return token;
     },
+    // 세션 굽기
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
